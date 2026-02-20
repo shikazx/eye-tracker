@@ -1,0 +1,40 @@
+/* --- New Upload Screen Styles --- */
+.upload-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: white;
+  font-family: sans-serif;
+}
+
+.upload-screen h1 {
+  margin-bottom: 10px;
+}
+
+.upload-screen p {
+  margin-bottom: 30px;
+  color: #aaa;
+}
+
+/* Hide the ugly default file input and style the label as a button */
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 12px 24px;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.custom-file-upload:hover {
+  background-color: #45a049;
+}
