@@ -2,6 +2,31 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
+const genAI = GOOGLE_API_KEY ? new GoogleGenerativeAI(GOOGLE_API_KEY) : null;
+
+const model = genAI ? genAI.getGenerativeModel({ model: "gemini-flash-latest" }) : null;
+
+async function sendQuery(prompt) {
+  if (!model) {
+    console.error("AI Client not initialized. Check your API key.");
+    return null;
+  }
+
+  try {
+    const result = await model.generateContent(prompt);
+    return result.response.text();
+  } catch (error) {
+    console.error("AI Query Error:", error);
+    throw error;
+  }
+}
 
 function createWindow() {
   // Create the browser window.
@@ -52,9 +77,18 @@ app.whenReady().then(() => {
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
 
+  ipcMain.handle('ask-ai', async (event, prompt) => {
+    try {
+      const response = await sendQuery(prompt);
+      return response; // Sends the result back to the frontend
+    } catch (err) {
+      return "Error: " + err.message;
+    }
+  });
+
   createWindow()
 
-  app.on('activate', function () {
+  app.on('activate', async function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()

@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
+// this is how you call gemini api:
+//    window.api.askGemini("hello").then(res => console.log("AI TEST RESULT:", res));
+
 function App() {
   const [pdfUrl, setPdfUrl] = useState(null)
   const [isMagicKeyHeld, setIsMagicKeyHeld] = useState(false)
-  const [gazeY, setGazeY] = useState(500) 
-  const [glowHeight, setGlowHeight] = useState(100) 
+  const [gazeY, setGazeY] = useState(500)
+  const [glowHeight, setGlowHeight] = useState(100)
 
   // --- NEW: Handle the file upload ---
   const handleFileUpload = (e) => {
@@ -32,7 +35,7 @@ function App() {
 
     const handleScroll = (e) => {
       if (isMagicKeyHeld) {
-        e.preventDefault() 
+        e.preventDefault()
         setGlowHeight(prev => Math.min(Math.max(prev + (e.deltaY * 0.5), 20), 400))
       }
     }
@@ -56,24 +59,24 @@ function App() {
           <h1>Gaze Prompting AI</h1>
           <p>Select a research paper or dense code PDF to begin.</p>
           <label className="custom-file-upload">
-            <input 
-              type="file" 
-              accept="application/pdf" 
-              onChange={handleFileUpload} 
+            <input
+              type="file"
+              accept="application/pdf"
+              onChange={handleFileUpload}
             />
             Open PDF
           </label>
         </div>
       ) : (
         <>
-          <embed 
-            src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`} 
-            type="application/pdf" 
+          <embed
+            src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
+            type="application/pdf"
             className="pdf-viewer"
           />
 
           {isMagicKeyHeld && (
-            <div 
+            <div
               className="gaze-highlighter"
               style={{
                 top: `${gazeY - (glowHeight / 2)}px`,
