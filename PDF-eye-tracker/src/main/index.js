@@ -31,16 +31,17 @@ async function sendQuery(prompt) {
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    fullscreen: true,
+    resizable: false,    // Disables dragging the corners to resize
+    maximizable: false,  // Disables the maximize button
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
-      plugins: true, // <-- 1. Enables the native Chromium PDF Viewer
-      webSecurity: false // <-- 2. Hackathon Cheat Code: Stops Electron from blocking your 'blob:' URL
+      plugins: true, 
+      webSecurity: false 
     }
   })
 

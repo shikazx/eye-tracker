@@ -1,0 +1,52 @@
+.pdf-screen {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.pdf-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+}
+
+.pdf-viewer {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.explanation-container{
+  width: 0vw;             
+  height: 100vh;
+  background-color: #252526;
+  overflow: hidden;       
+  white-space: nowrap;    
+  
+  
+  transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.show-explanation .explanation-container{
+    width: 40vw;
+    white-space: normal;
+}
+
+.show-explanation .pdf-container{
+    width: 60vw;
+    white-space: normal;
+}
+
+.tracker-area{
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 235, 59, 0.35); 
+  pointer-events: none; 
+  z-index: 10;
+  transition: height 0.1s ease-out; 
+}
