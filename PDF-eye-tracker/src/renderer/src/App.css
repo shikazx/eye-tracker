@@ -1,28 +1,34 @@
-/* --- New Upload Screen Styles --- */
+#root, body, html {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; 
+  background-color: #1e1e1e; /* Dark theme */
+}
+
+.app-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* --- The Upload Screen --- */
 .upload-screen {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100vw;  /* Forces the menu to ignore the flex split */
   height: 100vh;
   color: white;
   font-family: sans-serif;
 }
 
-.upload-screen h1 {
-  margin-bottom: 10px;
-}
-
-.upload-screen p {
-  margin-bottom: 30px;
-  color: #aaa;
-}
-
-/* Hide the ugly default file input and style the label as a button */
-input[type="file"] {
-  display: none;
-}
-
+.upload-screen h1 { margin-bottom: 10px; }
+.upload-screen p { margin-bottom: 30px; color: #aaa; }
+input[type="file"] { display: none; }
 .custom-file-upload {
   border: 1px solid #ccc;
   display: inline-block;
@@ -34,7 +40,38 @@ input[type="file"] {
   font-weight: bold;
   transition: background-color 0.2s;
 }
+.custom-file-upload:hover { background-color: #45a049; }
 
-.custom-file-upload:hover {
-  background-color: #45a049;
+/* --- The Split Panels --- */
+.left-panel {
+  flex: 1; 
+  height: 100vh;
+  background-color: #252526; /* Slightly lighter dark for contrast */
+  border-right: 1px solid #3c3c3c;
+}
+
+.right-panel {
+  width: 50vw; /* Strict 50% right half */
+  height: 100vh;
+  position: relative; /* Keeps highlighter strictly inside this half */
+}
+
+/* --- The PDF Viewer --- */
+.pdf-viewer {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* --- The Highlighter --- */
+.gaze-highlighter {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 235, 59, 0.35); 
+  box-shadow: 0 0 15px rgba(255, 235, 59, 0.5); 
+  pointer-events: none; 
+  z-index: 10;
+  transition: height 0.1s ease-out; 
 }

@@ -38,7 +38,9 @@ function createWindow() {
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false
+      sandbox: false,
+      plugins: true, // <-- 1. Enables the native Chromium PDF Viewer
+      webSecurity: false // <-- 2. Hackathon Cheat Code: Stops Electron from blocking your 'blob:' URL
     }
   })
 
