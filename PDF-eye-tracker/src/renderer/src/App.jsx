@@ -7,17 +7,14 @@ function App() {
   const [gazeY, setGazeY] = useState(500) 
   const [glowHeight, setGlowHeight] = useState(100) 
 
-  // --- NEW: Handle the file upload ---
   const handleFileUpload = (e) => {
     const file = e.target.files[0]
     if (file && file.type === 'application/pdf') {
-      // Creates a temporary, secure URL that the browser/Electron can read instantly
       const url = URL.createObjectURL(file)
       setPdfUrl(url)
     }
   }
 
-  // Listen for the Magic Key and Scroll Wheel
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Alt' && !isMagicKeyHeld) setIsMagicKeyHeld(true)
@@ -50,7 +47,6 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* Conditionally render the upload screen OR the PDF viewer */}
       {!pdfUrl ? (
         <div className="upload-screen">
           <h1>Gaze Prompting AI</h1>
@@ -66,21 +62,27 @@ function App() {
         </div>
       ) : (
         <>
-          <embed 
-            src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`} 
-            type="application/pdf" 
-            className="pdf-viewer"
-          />
+          <div className="left-panel">
+            {/* AI explanation UI will go here */}
+          </div>
 
-          {isMagicKeyHeld && (
-            <div 
-              className="gaze-highlighter"
-              style={{
-                top: `${gazeY - (glowHeight / 2)}px`,
-                height: `${glowHeight}px`
-              }}
+          <div className="right-panel">
+            <iframe 
+              src={`${pdfUrl}#toolbar=0&zoom=100`} 
+              className="pdf-viewer"
+              title="PDF Viewer"
             />
-          )}
+
+            {isMagicKeyHeld && (
+              <div 
+                className="gaze-highlighter"
+                style={{
+                  top: `${gazeY - (glowHeight / 2)}px`,
+                  height: `${glowHeight}px`
+                }}
+              />
+            )}
+          </div>
         </>
       )}
     </div>
