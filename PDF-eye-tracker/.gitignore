@@ -1,6 +1,18 @@
-node_modules
-dist
-out
-.DS_Store
-.eslintcache
+# Dependency directories
+node_modules/
+
+# Environment variables (Crucial for security!)
+.env
+
+# Build outputs
+dist/
+out/
+
+# Logs
 *.log*
+
+# System files
+.DS_Store
+
+# Cache files
+.eslintcache
