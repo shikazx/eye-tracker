@@ -5,7 +5,7 @@ import './Pdf.css'
 function Pdf(props) {
   const [isMagicKeyHeld, setIsMagicKeyHeld] = useState(false)
   const [isAppReady, setIsAppReady] = useState(false);
-  const [gazeY, setGazeY] = useState(null) 
+  const [gazeY, setGazeY] = useState(null)
   const [areaHeight, setAreaHeight] = useState(50)
   const [isExplaining, setIsExplaining] = useState(false);
   const [aiResponse, setAiResponse] = useState("");
@@ -23,7 +23,7 @@ function Pdf(props) {
 
     webgazer.setGazeListener((data) => {
       if (data == null) return;
-      
+
       if (!isCalibrated || isMagicKeyHeld) {
         setGazeY(prevY => {
           if (prevY === null) return data.y;
@@ -31,7 +31,7 @@ function Pdf(props) {
         });
       }
     }).begin().then(() => {
-      webgazer.resume(); 
+      webgazer.resume();
     });
 
     return () => webgazer.end();
@@ -51,28 +51,53 @@ function Pdf(props) {
         setIsExplaining(false);
       }
     }
-    
 
-    const handleKeyUp = (e) => {
+    const handleKeyUp = async (e) => {
       if (e.key === 'Shift') {
         setIsMagicKeyHeld(false);
         webgazer.pause();
 
-        // process stuff here
+        try {
+          console.log('Capturing multiple images...');
+          const imageSrc1 = await window.api.captureScreen();
 
-        setAiResponse("This is a placeholder");
-        setIsExplaining(true);
+          const imageSrc2 = await window.api.captureScreen();
+
+          const imageSources = [imageSrc1, imageSrc2];
+
+          if (imageSources.length > 0) {
+            const imagesPayload = imageSources.map(src => {
+              return {
+                data: src.split(',')[1], // The raw base64 string
+                mimeType: 'image/png'    // The mime type
+              };
+            });
+
+            const result = await window.api.askAI(
+              "Compare and explain these images. Note the differences. Acknowledge how many images you received.",
+              imagesPayload
+            );
+
+            setAiResponse(result);
+            setIsExplaining(true);
+            console.log("setting ai response to: ", result);
+          } else {
+            console.error('Capture failed. No images were captured.');
+          }
+        } catch (err) {
+          console.error(err);
+          console.error('An IPC error or API error occurred.');
+        }
       }
 
       if (e.key === '+') {
-        console.log("plus let go")
-        setAreaHeight(areaHeight + 20)
+        setAreaHeight(prev => prev + 20);
       }
       if (e.key === '_') {
-        const thing = Math.max(50, areaHeight - 20)
-        setAreaHeight(thing)
+        setAreaHeight(prev => Math.max(50, prev - 20));
       }
-    }
+    };
+
 
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);

@@ -1,10 +1,10 @@
-import { contextBridge, ipcRenderer } from 'electron' // Added ipcRenderer
+import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
-// 1. Add your custom bridge function here
 const api = {
-  // This sends a message to the Main process and waits for the AI result
-  askGemini: (prompt) => ipcRenderer.invoke('ask-ai', prompt)
+  askAI: (prompt, images) =>
+    ipcRenderer.invoke('ask-ai', prompt, images),
+  captureScreen: (rect) => ipcRenderer.invoke('capture-screen', rect),
 }
 
 if (process.contextIsolated) {
