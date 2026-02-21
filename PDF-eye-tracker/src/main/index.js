@@ -136,7 +136,7 @@ app.whenReady().then(() => {
       }
 
       let capturedImage = targetSource.thumbnail;
-
+      let croppedImage = null;
       if (rect && typeof rect === 'object' && rect.width > 0 && rect.height > 0) {
         const cropRect = {
           x: Math.round(rect.x),
@@ -145,11 +145,20 @@ app.whenReady().then(() => {
           height: Math.round(rect.height),
         };
 
-        capturedImage = capturedImage.crop(cropRect);
+        croppedImage = capturedImage.crop(cropRect);
       }
 
-      const dataUrl = capturedImage.toDataURL();
-      return dataUrl;
+      const dataUrlCaptured = capturedImage.toDataURL();
+
+      if (!croppedImage){
+        return [dataUrlCaptured];
+      }
+      else{
+        const dataUrlCropped = croppedImage.toDataURL();
+
+        return [dataUrlCaptured, dataUrlCropped];
+      }
+
 
     } catch (error) {
       console.error('Failed to capture screen:', error);

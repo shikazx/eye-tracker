@@ -59,11 +59,9 @@ function Pdf(props) {
 
         try {
           console.log('Capturing multiple images...');
-          const imageSrc1 = await window.api.captureScreen();
+          const rect = { x: window.innerWidth/2-400, y: gazeY - (areaHeight / 2), width: 1000, height: areaHeight };
 
-          const imageSrc2 = await window.api.captureScreen();
-
-          const imageSources = [imageSrc1, imageSrc2];
+          const imageSources = await window.api.captureScreen(rect);
 
           if (imageSources.length > 0) {
             const imagesPayload = imageSources.map(src => {
@@ -74,7 +72,10 @@ function Pdf(props) {
             });
 
             const result = await window.api.askAI(
-              "Compare and explain these images. Note the differences. Acknowledge how many images you received.",
+              "I am trying to understand this document. " +
+              "I have sent two pictures. One is a cropped picture about the part I am stuck on. " +
+              "The other picture is the whole page I am currently on for addtional context." +
+              "Please help me understand the contents of the cropped picture.",
               imagesPayload
             );
 
