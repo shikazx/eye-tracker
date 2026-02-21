@@ -10,12 +10,12 @@ const api = {
 if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld('electron', electronAPI)
-    contextBridge.exposeInMainWorld('api', api) // This exposes window.api.askGemini
+    contextBridge.exposeInMainWorld('api', api)
   } catch (error) {
     console.error(error)
   }
 } else {
-  // Fallback for older/less secure configurations
+
   window.electron = electronAPI
   window.api = api
 }

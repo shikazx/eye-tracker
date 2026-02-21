@@ -17,13 +17,13 @@ function Pdf(props) {
 
   useWheel(({ event, delta: [, dy] }) => {
     if (isMagicKeyHeld) {
-      event.preventDefault(); 
-      
+      event.preventDefault();
+
       setAreaHeight(areaHeight + (dy * 0.5))
     }
   }, {
-    target: window, 
-    eventOptions: { passive: false } 
+    target: window,
+    eventOptions: { passive: false }
   }, []);
 
   // have to do this so that webgazer does not override the react html
@@ -36,6 +36,8 @@ function Pdf(props) {
     if (!isAppReady) return;
 
     webgazer.showPredictionPoints(false);
+
+    webgazer.setRegression('ridge');
     webgazer.setGazeListener((data) => {
       if (data == null) return;
 
@@ -83,21 +85,21 @@ function Pdf(props) {
           if (imageSources.length > 0) {
             const imagesPayload = imageSources.map(src => {
               return {
-                data: src.split(',')[1], 
-                mimeType: 'image/png'    
+                data: src.split(',')[1],
+                mimeType: 'image/png'
               };
             });
 
             const result = await window.api.askAI(
-              "I am trying to understand this document. " +
-              "I have sent two pictures. One is a cropped picture about the part I am stuck on. " +
-              "The other picture is the whole page I am currently on for additional context for you." +
-              "Please help me understand the contents of the cropped picture." +
-              "Don't ask follow ups as the I cannot respond, just explain to the best you can." +
-              "The textbox your text will show up in is 2200 characters in total, 76 characters per line. " +
-              "Don't do lists as the text will appear as one big paragraph of text.",
+              'I am trying to understand this document. ' +
+                'I have sent two pictures. One is a cropped picture about the part I am stuck on. ' +
+                'The other picture is the whole page I am currently on for additional context for you.' +
+                'Please help me understand the contents of the cropped picture.' +
+                "Don't ask follow ups as the I cannot respond, just explain to the best you can." +
+                'The textbox your text will show up in is 2200 characters in total, 76 characters per line. ' +
+                "Don't do lists as the text will appear as one big paragraph of text.",
               imagesPayload
-            );
+            )
 
             setAiResponse(result);
             setIsLoading(false);
@@ -112,10 +114,10 @@ function Pdf(props) {
       }
 
       if (e.key === '+') {
-        setAreaHeight(prev => prev + 20);
+        setAreaHeight((prev) => prev + 20)
       }
       if (e.key === '_') {
-        setAreaHeight(prev => Math.max(50, prev - 20));
+        setAreaHeight((prev) => Math.max(50, prev - 20))
       }
     };
 
@@ -174,17 +176,17 @@ function Pdf(props) {
         <iframe
           src={`${props.pdf}#toolbar=0`}
           className="pdf-viewer"
-          style={{ 
+          style={{
     // This is the magic line!
-    pointerEvents: isMagicKeyHeld ? 'none' : 'auto' 
-  }}
+            pointerEvents: isMagicKeyHeld ? 'none' : 'auto'
+          }}
         />
         {isMagicKeyHeld && (
           <div
             className="tracker-area"
 
             style={{
-              top: `${gazeY - (areaHeight / 2)}px`,
+              top: `${gazeY - areaHeight / 2}px`,
               height: `${areaHeight}px`,
               width: `${800}px`,
               marginLeft: `${-8}px`
