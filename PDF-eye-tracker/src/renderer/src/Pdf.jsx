@@ -12,6 +12,7 @@ function Pdf(props) {
 
   const [calibrationClicks, setCalibrationClicks] = useState(0);
   const [isCalibrated, setIsCalibrated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsAppReady(true);
@@ -54,6 +55,8 @@ function Pdf(props) {
 
     const handleKeyUp = async (e) => {
       if (e.key === 'Shift') {
+        setIsExplaining(true);
+        setIsLoading(true);
         setIsMagicKeyHeld(false);
         webgazer.pause();
 
@@ -83,7 +86,7 @@ function Pdf(props) {
             );
 
             setAiResponse(result);
-            setIsExplaining(true);
+            setIsLoading(false);
             console.log("setting ai response to: ", result);
           } else {
             console.error('Capture failed. No images were captured.');
@@ -145,9 +148,12 @@ function Pdf(props) {
       {isExplaining && (
         <div className="explanation-container">
           <div className="ai-content">
-            <button className="close-btn" onClick={() => setIsExplaining(false)}>×</button>
-            <h2>AI Explanation</h2>
-            <p>{aiResponse}</p>
+            <div className="explanation-top-bar">
+              <h2>Spotlight</h2>
+              <button className="close-btn" onClick={() => setIsExplaining(false)}>×</button>
+            </div>
+            {isLoading && <div className="loader"></div>}
+            {!isLoading && <p>{aiResponse}</p>}
           </div>
         </div>
       )}

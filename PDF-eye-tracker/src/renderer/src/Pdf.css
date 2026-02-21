@@ -14,6 +14,18 @@
   left: 0;
 }
 
+.close-btn {
+  background: transparent;
+  border: none;
+  color: #888;
+  font-size: 30px;
+  padding: 5px;
+}
+
+.close-btn:hover {
+  color: #fff;
+}
+
 .calibration-dot2{
   width: 25px;
   height: 25px;
@@ -81,15 +93,50 @@
   display: block;
 }
 
-.explanation-container{
-  width: 0vw;
-  height: 100vh;
+/* 1. Ensure the container fills its width and stacks vertically */
+.ai-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+/* 2. Fix the Top Bar to push the Close button to the far right */
+.explanation-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* This pushes title left, button right */
+  width: 100%; /* Required for space-between to work */
+  padding-bottom: 20px;
+}
+
+/* 3. Center the spinner perfectly */
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top-color: #dc9de7;
+  animation: spin 1s ease-in-out infinite;
+
+  /* The Secret Sauce for centering */
+  margin: auto;
+}
+
+/* 4. Fix height and overflow on the main container */
+.explanation-container {
   background-color: #252526;
-  overflow: hidden;
-  white-space: nowrap;
-
-
+  margin: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column; /* Stack top-bar and content */
   transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border-radius: 8px;
+  overflow-y: auto; /* Scroll if AI response is long */
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 .show-explanation .explanation-container{
@@ -130,8 +177,8 @@
 
 
 #webgazerVideoContainer {
-  top: 75% !important;   
-  left: 10% !important;   
+  top: 75% !important;
+  left: 10% !important;
 
   position: fixed;
 }
