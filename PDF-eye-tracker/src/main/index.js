@@ -64,12 +64,6 @@ app.whenReady().then(() => {
   ipcMain.on('ping', () => console.log('pong'))
 
   ipcMain.handle('ask-ai', async (event, prompt, images) => {
-    console.log("--- AI HANDLER TRIGGERED ---");
-    console.log("Received prompt:", prompt ? "Yes" : "No");
-    console.log("Received images:", Array.isArray(images) ? `Yes, count: ${images.length}` : "No");
-    if (Array.isArray(images) && images.length > 0) {
-      console.log("First image MIME type:", images[0].mimeType);
-    }
 
     if (!openrouter) {
       return "Error: OpenRouter Client not initialized.";
@@ -90,7 +84,6 @@ app.whenReady().then(() => {
         }
       }
 
-      console.log(`Sending payload with ${messageContent.length - 1} image(s) to OpenRouter...`);
       const response = await openrouter.chat.completions.create({
         model: "anthropic/claude-3.5-sonnet",
         messages: [{ role: 'user', content: messageContent }],
