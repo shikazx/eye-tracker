@@ -26,6 +26,7 @@ function Pdf(props) {
     eventOptions: { passive: false } 
   }, []);
 
+  // have to do this so that webgazer does not override the react html
   useEffect(() => {
     setIsAppReady(true);
   }, []);
@@ -34,6 +35,7 @@ function Pdf(props) {
   useEffect(() => {
     if (!isAppReady) return;
 
+    webgazer.showPredictionPoints(false);
     webgazer.setGazeListener((data) => {
       if (data == null) return;
 
@@ -81,8 +83,8 @@ function Pdf(props) {
           if (imageSources.length > 0) {
             const imagesPayload = imageSources.map(src => {
               return {
-                data: src.split(',')[1], // The raw base64 string
-                mimeType: 'image/png'    // The mime type
+                data: src.split(',')[1], 
+                mimeType: 'image/png'    
               };
             });
 
@@ -128,7 +130,6 @@ function Pdf(props) {
 
 
   const handleCalibrationClick = () => {
-    webgazer.showPredictionPoints(false);
     webgazer.resume();
 
     setCalibrationClicks(prev => prev + 1);
