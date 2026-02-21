@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import {useWheel} from '@use-gesture/react'
 import webgazer from 'webgazer';
 import './Pdf.css'
 
@@ -12,6 +13,17 @@ function Pdf(props) {
 
   const [calibrationClicks, setCalibrationClicks] = useState(0);
   const [isCalibrated, setIsCalibrated] = useState(false);
+
+  useWheel(({ event, delta: [, dy] }) => {
+    if (isMagicKeyHeld) {
+      event.preventDefault(); 
+      
+      setAreaHeight(areaHeight + (dy * 0.5))
+    }
+  }, {
+    target: window, 
+    eventOptions: { passive: false } 
+  }, []);
 
   useEffect(() => {
     setIsAppReady(true);
@@ -102,7 +114,6 @@ function Pdf(props) {
 
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
-
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
@@ -153,6 +164,10 @@ function Pdf(props) {
         <iframe
           src={`${props.pdf}#toolbar=0`}
           className="pdf-viewer"
+          style={{ 
+    // This is the magic line!
+    pointerEvents: isMagicKeyHeld ? 'none' : 'auto' 
+  }}
         />
         {isMagicKeyHeld && (
           <div
