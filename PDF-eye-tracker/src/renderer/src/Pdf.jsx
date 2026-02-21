@@ -74,8 +74,11 @@ function Pdf(props) {
             const result = await window.api.askAI(
               "I am trying to understand this document. " +
               "I have sent two pictures. One is a cropped picture about the part I am stuck on. " +
-              "The other picture is the whole page I am currently on for addtional context." +
-              "Please help me understand the contents of the cropped picture.",
+              "The other picture is the whole page I am currently on for additional context for you." +
+              "Please help me understand the contents of the cropped picture." +
+              "Don't ask follow ups as the I cannot respond, just explain to the best you can." +
+              "The textbox your text will show up in is 2200 characters in total, 76 characters per line. " +
+              "Don't do lists as the text will appear as one big paragraph of text.",
               imagesPayload
             );
 
