@@ -1,0 +1,137 @@
+.calibration-overlay{
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.calibration-dot1{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #ff1e00;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.calibration-dot2{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #ff1e00;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+
+.calibration-dot3{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #ff1e00;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
+.calibration-dot4{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #ff1e00;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+.calibration-dot5{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #ff1e00;
+  position: fixed;
+  top: 50%;
+  right: 50%;
+}
+
+.text{
+  position: fixed;
+  top: 40%;
+  right: 33%;
+}
+
+.pdf-screen {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.pdf-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.pdf-viewer {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.explanation-container{
+  width: 0vw;
+  height: 100vh;
+  background-color: #252526;
+  overflow: hidden;
+  white-space: nowrap;
+
+
+  transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.show-explanation .explanation-container{
+    width: 40vw;
+    white-space: normal;
+}
+
+.show-explanation .pdf-container{
+    width: 60vw;
+    white-space: normal;
+}
+
+
+
+.tracker-area {
+  position: absolute;
+
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: linear-gradient(
+    to bottom,
+    rgba(80, 150, 255, 0.25),
+    rgba(80, 150, 255, 0.1)
+  );
+
+  border-top: 2px solid rgba(80, 150, 255, 0.7);
+  border-bottom: 2px solid rgba(80, 150, 255, 0.7);
+
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(80, 150, 255, 0.3);
+
+  pointer-events: none;
+  z-index: 10;
+
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+
+#webgazerVideoContainer {
+  top: 75% !important;   
+  left: 10% !important;   
+
+  position: fixed;
+}
