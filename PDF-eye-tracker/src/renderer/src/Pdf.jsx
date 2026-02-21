@@ -51,7 +51,7 @@ function Pdf(props) {
         setIsExplaining(false);
       }
     }
-    };
+    
 
     const handleKeyUp = (e) => {
       if (e.key === 'Shift') {
