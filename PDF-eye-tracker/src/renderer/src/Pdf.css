@@ -93,7 +93,6 @@
   display: block;
 }
 
-/* 1. Ensure the container fills its width and stacks vertically */
 .ai-content {
   display: flex;
   flex-direction: column;
@@ -101,16 +100,14 @@
   height: 100%;
 }
 
-/* 2. Fix the Top Bar to push the Close button to the far right */
 .explanation-top-bar {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* This pushes title left, button right */
-  width: 100%; /* Required for space-between to work */
+  justify-content: space-between;
+  width: 100%;
   padding-bottom: 20px;
 }
 
-/* 3. Center the spinner perfectly */
 .loader {
   width: 40px;
   height: 40px;
@@ -119,20 +116,18 @@
   border-top-color: #dc9de7;
   animation: spin 1s ease-in-out infinite;
 
-  /* The Secret Sauce for centering */
   margin: auto;
 }
 
-/* 4. Fix height and overflow on the main container */
 .explanation-container {
   background-color: #252526;
   margin: 20px;
   padding: 20px;
   display: flex;
-  flex-direction: column; /* Stack top-bar and content */
+  flex-direction: column;
   transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   border-radius: 8px;
-  overflow-y: auto; /* Scroll if AI response is long */
+  overflow-y: auto;
 }
 
 @keyframes spin {
@@ -150,28 +145,26 @@
 }
 
 
-
 .tracker-area {
   position: absolute;
-
   left: 50%;
   transform: translateX(-50%);
 
   background: linear-gradient(
     to bottom,
-    rgba(80, 150, 255, 0.25),
-    rgba(80, 150, 255, 0.1)
+    rgba(220, 157, 231, 0.15),
+    rgba(220, 157, 231, 0.05)
   );
 
-  border-top: 2px solid rgba(80, 150, 255, 0.7);
-  border-bottom: 2px solid rgba(80, 150, 255, 0.7);
+  border-top: 2px solid rgba(220, 157, 231, 0.7);
+  border-bottom: 2px solid rgba(220, 157, 231, 0.7);
 
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(80, 150, 255, 0.3);
+  border-radius: 8px;
+
+  box-shadow: 0 0 15px rgba(220, 157, 231, 0.2);
 
   pointer-events: none;
   z-index: 10;
-
   transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 

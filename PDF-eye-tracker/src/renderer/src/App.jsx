@@ -19,7 +19,7 @@ function App() {
     <div className="app-container">
       {!pdfFile ? (
         <div className="upload-screen">
-          <h1>Eye Tracker PDF</h1>
+          <h1>Illuminate</h1>
           <p>Select an 8.5 X 11 in PDF to begin.</p>
           <label className="custom-file-upload">
             <input
