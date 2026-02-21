@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import webgazer from 'webgazer';
 import './Pdf.css'
 
@@ -45,6 +45,12 @@ function Pdf(props) {
         webgazer.showPredictionPoints(true);
         webgazer.resume();
       }
+
+      if (e.key === 'Escape') {
+        console.log("Escape let go");
+        setIsExplaining(false);
+      }
+    }
     };
 
     const handleKeyUp = (e) => {
@@ -57,7 +63,16 @@ function Pdf(props) {
         setAiResponse("This is a placeholder");
         setIsExplaining(true);
       }
-    };
+
+      if (e.key === '+') {
+        console.log("plus let go")
+        setAreaHeight(areaHeight + 20)
+      }
+      if (e.key === '_') {
+        const thing = Math.max(50, areaHeight - 20)
+        setAreaHeight(thing)
+      }
+    }
 
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
@@ -95,25 +110,33 @@ function Pdf(props) {
 
 
   return (
-    <div className={`pdf-screen ${isExplaining ? 'show-explanation' : ''}`}>
-      {}
-      <div className="explanation-container">
-        <div className="ai-content">
-          <button className="close-btn" onClick={() => setIsExplaining(false)}>×</button>
-          <h2>AI Overview</h2>
-          <p>{aiResponse}</p>
+    <div className={`pdf-screen
+          ${isExplaining ? 'show-explanation' : ''}
+        `}>
+      {isExplaining && (
+        <div className="explanation-container">
+          <div className="ai-content">
+            <button className="close-btn" onClick={() => setIsExplaining(false)}>×</button>
+            <h2>AI Explanation</h2>
+            <p>{aiResponse}</p>
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="pdf-container">
-        <iframe src={`${props.pdf}#toolbar=0&zoom=100`} className="pdf-viewer" />
+        <iframe
+          src={`${props.pdf}#toolbar=0`}
+          className="pdf-viewer"
+        />
         {isMagicKeyHeld && (
           <div
             className="tracker-area"
-            style={{ 
-                top: `${gazeY - (areaHeight / 2)}px`, 
-                height: `${areaHeight}px`,
-                position: 'absolute' 
+
+            style={{
+              top: `${gazeY - (areaHeight / 2)}px`,
+              height: `${areaHeight}px`,
+              width: `${800}px`,
+              marginLeft: `${-8}px`
             }}
           />
         )}
@@ -122,4 +145,4 @@ function Pdf(props) {
   )
 }
 
-export default Pdf
+export default Pdf;
