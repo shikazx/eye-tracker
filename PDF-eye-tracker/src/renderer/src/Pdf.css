@@ -21,13 +21,13 @@
 }
 
 .explanation-container{
-  width: 0vw;             
+  width: 0vw;
   height: 100vh;
   background-color: #252526;
-  overflow: hidden;       
-  white-space: nowrap;    
-  
-  
+  overflow: hidden;
+  white-space: nowrap;
+
+
   transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -41,12 +41,28 @@
     white-space: normal;
 }
 
-.tracker-area{
+
+
+.tracker-area {
   position: absolute;
-  left: 0;
-  width: 100%;
-  background-color: rgba(255, 235, 59, 0.35); 
-  pointer-events: none; 
+
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: linear-gradient(
+    to bottom,
+    rgba(80, 150, 255, 0.25),
+    rgba(80, 150, 255, 0.1)
+  );
+
+  border-top: 2px solid rgba(80, 150, 255, 0.7);
+  border-bottom: 2px solid rgba(80, 150, 255, 0.7);
+
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(80, 150, 255, 0.3);
+
+  pointer-events: none;
   z-index: 10;
-  transition: height 0.1s ease-out; 
+
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
